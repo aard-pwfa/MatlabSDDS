@@ -9,7 +9,7 @@ function varargout=getcol(filename,colname)
 	switch class(colname)
 		case 'char'
 			out=converttovector(sdds.column.(colname));
-			out=out(first:end);
+			out={out(first:end)};
 		case 'cell'
 			colsize=size(colname,2)
 			out=cell(colsize,1);
