@@ -1,4 +1,4 @@
-function varargout=plotcolumn(filename,colstr,formatstr)
+function varargout=plotyycolumn(filename,colstr,formatstr)
 	if nargin<3
 		formatstr={'-','-'};
 	end
