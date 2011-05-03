@@ -1,7 +1,7 @@
 function namearray=colnames(filename)
 	switch class(filename)
 		case 'char'
-			sdds=sddsload(filename);
+			sdds=sddsheader(filename);
 		case 'struct'
 			sdds=filename;
 	end

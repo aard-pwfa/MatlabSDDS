@@ -1,10 +1,16 @@
-function varargout=extractphasespace(filename)
-	sdds = sddsload(filename);
+function varargout=extractphasespace(filename,varargin)
+	if nargin==1
+		varargin=1;
+	end
+	sdds = sddsloadinc(filename,varargin);
 	x    = converttovector(sdds.column.x);
 	xp   = converttovector(sdds.column.xp);
 	y    = converttovector(sdds.column.y);
 	yp   = converttovector(sdds.column.yp);
 	t    = converttovector(sdds.column.t);
+	if nargout==8
+		dt   = converttovector(sdds.column.dt);
+	end
 	p    = converttovector(sdds.column.p);
 	pID  = converttovector(sdds.column.particleID);
 
@@ -17,5 +23,7 @@ function varargout=extractphasespace(filename)
 			varargout = {x, xp, y, yp, t, p};
 		case 7
 			varargout = {x, xp, y, yp, t, p, pID};
+		case 8
+			varargout = {x, xp, y, yp, t, dt, p, pID};
 	end
 end
