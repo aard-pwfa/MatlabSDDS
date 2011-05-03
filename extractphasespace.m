@@ -1,8 +1,8 @@
 function varargout=extractphasespace(filename,varargin)
 	if nargin==1
-		varargin=1;
+		varargin={1};
 	end
-	sdds = sddsloadinc(filename,varargin);
+	sdds = sddsloadinc(filename,varargin{1});
 	x    = converttovector(sdds.column.x);
 	xp   = converttovector(sdds.column.xp);
 	y    = converttovector(sdds.column.y);
