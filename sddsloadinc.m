@@ -1,4 +1,10 @@
-function [sdds] = sddsload(filename,pagenum)
+function [sdds] = sddsloadinc(filename,varargin)
+if nargin==1
+	pagenum=1;
+else
+	pagenum=varargin{1};
+end
+
 % ************************************************************************
 % Copyright (c) 2002 The University of Chicago, as Operator of Argonne
 % National Laboratory.
