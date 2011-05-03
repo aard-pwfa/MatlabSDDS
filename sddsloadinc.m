@@ -46,6 +46,8 @@ if sdds.pages == 0
     return
 end
 
+sdds.pages=1;
+
 k = size(sdds.parameter_names,1);
 for j = 1:k
     name = convertSDDSname(sdds.parameter_names(j,1:end));
@@ -81,7 +83,7 @@ for j = 1:k
         eval(['sdds.parameter.',name,'.data = values;'])
     else
         i = pagenum;
-        eval(['sdds.parameter.',name,'.data(i) = sddsData.getParameterValue(j-1,i,0);'])
+        eval(['sdds.parameter.',name,'.data(1) = sddsData.getParameterValue(j-1,i,0);'])
     end
 end
 
@@ -121,7 +123,7 @@ for j = 1:k
         continue
     end
     values = sddsData.getColumnValues(j-1,i,0);
-    eval(['sdds.column.',name,'.page',int2str(i),' = values;'])
+    eval(['sdds.column.',name,'.page1 = values;'])
 end
 
 k = size(sdds.array_names,1);
@@ -171,7 +173,7 @@ for j = 1:k
     for n = 1:dimensions
         datasize(n) = double(values(n));
     end
-    eval(['sdds.array.',name,'.size_page',int2str(i),' = datasize;'])
+    eval(['sdds.array.',name,'.size_page1 = datasize;'])
     arraySize = datasize(1);
     for n = 2:dimensions
         arraySize = datasize(n) * arraySize;
@@ -180,6 +182,5 @@ for j = 1:k
         continue
     end
     values = sddsData.getArrayValues(j-1,i,0);
-    eval(['sdds.array.',name,'.page',int2str(i),' = values;'])
+    eval(['sdds.array.',name,'.page1 = values;'])
 end
-
