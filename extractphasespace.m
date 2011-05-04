@@ -25,5 +25,9 @@ function varargout=extractphasespace(filename,varargin)
 			varargout = {x, xp, y, yp, t, p, pID};
 		case 8
 			varargout = {x, xp, y, yp, t, dt, p, pID};
+		case 1
+			c=299792458;
+			dtm=t-mean(t);
+			varargout={dtm*c};
 	end
 end
