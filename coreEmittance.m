@@ -72,33 +72,6 @@ function varargout=coreEmittance(filename,fraction)
 	unix('sddsanalyzebeam saved.out saved.out.ana');
 	unix(['sddsprintout ' filename '.ana -col=ecn*'])
 	unix('sddsprintout saved.out.ana -col=ecn*')
-
-	% while midpt~=targetParts
-	%         begpt=numInEllipse(partlist,begfrac,ex,ey);
-	%         midpt=numInEllipse(partlist,midfrac,ex,ey);
-	%         endpt=numInEllipse(partlist,endfrac,ex,ey);
-	%         if begpt>targetParts
-	%                 begfrac=begfrac/10;
-	%         elseif endpt<targetParts
-	%                 endfrac=endfrac*10;
-	%         elseif midpt>targetParts
-	%                 endfrac=midfrac;
-	%         elseif midpt<targetParts
-	%                 begfrac=midfrac;
-	%         end
-	%         midfrac=mean([begfrac,endfrac]);
-	% end
-	% varargout={midfrac,twiss};
-	% [tot,bool]=numInEllipse(partlist,midfrac,ex,ey);
-	% ex=emit(x.*bool,xp.*bool)
-
-	% dumptot=sum(~bool)
-	% npartlist = [pID.*(~bool),x,xp,y,yp,t,p];
-	% psorted   = sortrows(npartlist,-1);
-	% todump    = psorted(1:dumptot,:);
-	% dumpparts(todump,sdds,'rejected.out');
-	% dumpparts(psorted(dumptot+1:end,:),sdds,'saved.out');
-
 end
 
 function varargout=numInEllipse(partlist,frac,ex,ey)
