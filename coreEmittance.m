@@ -11,8 +11,8 @@ function varargout=coreEmittance(filename,fraction)
 	
 
 	% Loads emittance from analyzed particle file
-	ex     = getcol('momentumscan.out.ana','ex');
-	ey     = getcol('momentumscan.out.ana','ey');
+	ex     = getcol([filename '.ana'],'ex');
+	ey     = getcol([filename '.ana'],'ey');
 	% =========================================================
 	% =========================================================
 	% 		Pick a twiss loading method here.
@@ -21,10 +21,10 @@ function varargout=coreEmittance(filename,fraction)
 	% ---------------------------------------------------------
 	% Loads twiss parameters from .twi file.
 	% ---------------------------------------------------------
-	betax  = getcol('momentumscan.twi','betax');
-	betay  = getcol('momentumscan.twi','betay');
-	alphax = getcol('momentumscan.twi','alphax');
-	alphay = getcol('momentumscan.twi','alphay');
+	betax  = getcol([filename '.twi'],'betax');
+	betay  = getcol([filename '.twi'],'betay');
+	alphax = getcol([filename '.twi'],'alphax');
+	alphay = getcol([filename '.twi'],'alphay');
 	betax  = betax(end);
 	betay  = betay(end);
 	alphax  = alphax(end);
