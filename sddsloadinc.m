@@ -1,8 +1,17 @@
 function [sdds] = sddsloadinc(filename,varargin)
+% Loads only one page into memory.
+% Loads first page if page number isn't specified.
 if nargin==1
 	pagenum=1;
 else
 	pagenum=varargin{1};
+end
+
+% If loading from a .split dir
+if exist(filename,'dir')==7
+	files=dir([filename '/*.out']);
+	filename=[filename '/' files(pagenum).name];
+	pagenum=1;
 end
 
 % ************************************************************************
