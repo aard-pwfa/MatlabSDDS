@@ -25,7 +25,7 @@ function varargout=plotcolumn(filename,colstr,formatstr)
 				y=y(first:end);
 				plot(y,formatstr);
 				addlabels('Array Index',colstr,'');
-				out=[out y];
+				out={[out y]};
 			end
 		case 'cell'
 			disp('hi');
@@ -41,6 +41,6 @@ function varargout=plotcolumn(filename,colstr,formatstr)
 	end
 
 	if nargout~=0
-		varargout={out};
+		varargout=out;
 	end
 end
