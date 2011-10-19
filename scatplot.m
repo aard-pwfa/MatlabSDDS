@@ -1,14 +1,19 @@
-function scatplot(filename,xcol,ycol,pagenum,format)
+function varargout=scatplot(filename,xcol,ycol,varargin)
 	if nargin <= 3
 		pagenum=1;
        		format='bo';
 	elseif nargin == 4
+		pagenum=varargin{1};
 		% For when the third argument is a format.
 		if ~isnumeric(pagenum)
 			format=pagenum;
 			pagenum=1;
+		else
+			format='.';
 		end
 	elseif nargin == 5
+		pagenum=varagin{1};
+		format=varargin{2};
 		if ischar(pagenum) 
 			if ischar(format)
 				pagenum=eval(pagenum);
@@ -19,14 +24,20 @@ function scatplot(filename,xcol,ycol,pagenum,format)
 			end
 		end
 	end
-	
 
-	sdds=sddsload(filename);
-	x=converttovector(sdds.column.(xcol),pagenum);
-	y=converttovector(sdds.column.(ycol),pagenum);
+	sdds=loadpage(filename,pagenum);
+	x=converttovector(sdds.column.(xcol));
+	y=converttovector(sdds.column.(ycol));
+	
 	x=correct_p_dt(xcol,x,sdds);
 	y=correct_p_dt(ycol,y,sdds);
-	plot(x,y,format)
+
+	if nargout==2
+		varargout={x,y};
+	else
+		plot(x,y,format)
+	end
+	% plot(x,y)
 end
 
 function x=correct_p_dt(xstr,x,sdds)
