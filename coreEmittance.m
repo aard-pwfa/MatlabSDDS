@@ -1,9 +1,9 @@
-function varargout=coreEmittance(filename,fraction)
+function varargout=coreEmittance(fileroot,fraction)
 	display('This calculation expects a corresponding .twi file with the last Twiss entry corresponding to the particle dump!');
-	sdds=sddsload(filename);
-	unix(['sddsanalyzebeam ' filename ' ' filename '.ana']);
+	sdds=sddsload(fileroot);
+	unix(['sddsanalyzebeam ' fileroot '.out ' fileroot '.ana']);
 
-	[x,xp,y,yp,t,p,pID]=extractphasespace(filename);
+	[x,xp,y,yp,t,p,pID]=extractphasespace(fileroot);
 	partlist=[pID, x, xp, y, yp, t, p];
 	% size(partlist)
 	numParts=size(pID,1)
@@ -11,8 +11,8 @@ function varargout=coreEmittance(filename,fraction)
 	
 
 	% Loads emittance from analyzed particle file
-	ex     = getcol([filename '.ana'],'ex');
-	ey     = getcol([filename '.ana'],'ey');
+	ex     = getcol([fileroot '.ana'],'ex');
+	ey     = getcol([fileroot '.ana'],'ey');
 	% =========================================================
 	% =========================================================
 	% 		Pick a twiss loading method here.
@@ -21,10 +21,10 @@ function varargout=coreEmittance(filename,fraction)
 	% ---------------------------------------------------------
 	% Loads twiss parameters from .twi file.
 	% ---------------------------------------------------------
-	betax  = getcol([filename '.twi'],'betax');
-	betay  = getcol([filename '.twi'],'betay');
-	alphax = getcol([filename '.twi'],'alphax');
-	alphay = getcol([filename '.twi'],'alphay');
+	betax  = getcol([fileroot '.twi'],'betax');
+	betay  = getcol([fileroot '.twi'],'betay');
+	alphax = getcol([fileroot '.twi'],'alphax');
+	alphay = getcol([fileroot '.twi'],'alphay');
 	betax  = betax(end);
 	betay  = betay(end);
 	alphax  = alphax(end);
@@ -70,7 +70,7 @@ function varargout=coreEmittance(filename,fraction)
 	dumpparts(pcut,sdds,'saved.out');
 	varargout={psorted(round(numParts*fraction),:),twiss};
 	unix('sddsanalyzebeam saved.out saved.out.ana');
-	unix(['sddsprintout ' filename '.ana -col=ecn*'])
+	unix(['sddsprintout ' fileroot '.ana -col=ecn*'])
 	unix('sddsprintout saved.out.ana -col=ecn*')
 end
 
