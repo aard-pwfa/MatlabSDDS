@@ -15,6 +15,7 @@ function varargout=getcol(filename,colname,page)
 			out={out(first:end)};
 		case 'cell'
 			colsize=size(colname,2);
+			nargoutchk(colsize,colsize);
 			out=cell(colsize,1);
 			for i=1:colsize
 				out{i}=converttovector(sdds.column.(colname{i}),page);
