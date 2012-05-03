@@ -1,18 +1,15 @@
 function varargout=coreEmittance(fileroot,fraction)
 	display('This calculation expects a corresponding .twi file with the last Twiss entry corresponding to the particle dump!');
-	sdds=sddsload(fileroot);
+	sdds=sddsload([fileroot '.out']);
 	unix(['sddsanalyzebeam ' fileroot '.out ' fileroot '.ana']);
 
-	[x,xp,y,yp,t,p,pID]=extractphasespace(fileroot);
+	[x,xp,y,yp,t,p,pID]=extractphasespace([fileroot '.out']);
 	partlist=[pID, x, xp, y, yp, t, p];
 	% size(partlist)
 	numParts=size(pID,1)
 	targetParts=round(numParts*fraction)
 	
 
-	% Loads emittance from analyzed particle file
-	ex     = getcol([fileroot '.ana'],'ex');
-	ey     = getcol([fileroot '.ana'],'ey');
 	% =========================================================
 	% =========================================================
 	% 		Pick a twiss loading method here.
@@ -32,6 +29,8 @@ function varargout=coreEmittance(fileroot,fraction)
 	% ---------------------------------------------------------
 	% Loads twiss pparameters from analyzed particle file.
 	% ---------------------------------------------------------
+	ex     = getcol([fileroot '.ana'],'ex');
+	ey     = getcol([fileroot '.ana'],'ey');
 	% betax  = getcol('momentumscan.out.ana','betax');
 	% betay  = getcol('momentumscan.out.ana','betay');
 	% alphax = getcol('momentumscan.out.ana','alphax');
@@ -43,8 +42,8 @@ function varargout=coreEmittance(fileroot,fraction)
 	gammay = (1+alphay^2)/betay;
 	twiss = struct('ex',ex,'ey',ey,'betax',betax,'betay',betay,'alphax',alphax,'alphay',alphay,'gammax',gammax,'gammay',gammay);
 
-	csparamx = [betax, alphax, gammax,ex];
-	csparamy = [betay, alphay, gammay,ey];
+	% csparamx = [betax, alphax, gammax,ex];
+	% csparamy = [betay, alphay, gammay,ey];
 	
 	% Since each particle is summed over, the contribution
 	% of each particle to the 4-D emittance is calc. first.
@@ -66,12 +65,12 @@ function varargout=coreEmittance(fileroot,fraction)
 	ex=emit(pcut(:,2),pcut(:,3))
 
 	todump=psorted(targetParts+1:end,:);
-	dumpparts(todump,sdds,'rejected.out');
-	dumpparts(pcut,sdds,'saved.out');
+	dumpparts(todump,sdds,[fileroot '_rejected.out']);
+	dumpparts(pcut,sdds,[fileroot '_saved.out']);
 	varargout={psorted(round(numParts*fraction),:),twiss};
-	unix('sddsanalyzebeam saved.out saved.out.ana');
-	unix(['sddsprintout ' fileroot '.ana -col=ecn*'])
-	unix('sddsprintout saved.out.ana -col=ecn*')
+	unix(['sddsanalyzebeam ' fileroot '_saved.out ' fileroot '_saved.out.ana']);
+	unix(['sddsprintout ' fileroot '.ana -col=e*'])
+	unix(['sddsprintout ' fileroot '_saved.out.ana -col=e*'])
 end
 
 function varargout=numInEllipse(partlist,frac,ex,ey)
@@ -98,7 +97,6 @@ function dumpparts(todump,sdds,filename)
 	sdds.column.particleID.page1 = todump(:,1);
 	sdds.ascii=1;
 	sddssave(sdds,filename);
-
 end
 
 function varargout=sigfrac(partlist,frac)
