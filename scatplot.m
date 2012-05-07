@@ -1,4 +1,6 @@
 function varargout=scatplot(filename,xcol,ycol,varargin)
+%SCATPLOT Create scatter plot.
+
 	if nargin <= 3
 		pagenum=1;
        		format='bo';
