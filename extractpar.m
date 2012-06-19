@@ -17,12 +17,23 @@ function out=extractpar(filename)
 		end
 		out.name{j}            = NameAvail{i};
 		out.type{j}            = TypeAvail{i};
-		out.occ{j}             = OccAvail(i);
-		out.(ParamAvail{i}){j} = ValueAvail(i);
+		out.occ(j)             = OccAvail(i);
+		out.(ParamAvail{i})(j) = ValueAvail(i);
 	end
 
+	% Make sure all extracted things have elements
+	% out to the end.  Prevents problems when indexing
+	% not expecting ragged edges.
 	fields=fieldnames(out);
 	for i=1:size(fields,1)
-		out.(fields{i}){j}=0;
+		% Check size, if right, move on.
+		if max(size(out.(fields{i})))~=j
+			switch class(out.(fields{i}))
+				case 'cell'
+					out.(fields{i}){j}={};
+				case 'double'
+					out.(fields{i})(j)=0;
+			end
+		end
 	end
 end
