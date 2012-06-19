@@ -9,9 +9,13 @@ function varargout=gettwiss(filename,ind)
 	alphay=getcol(filename,'alphay');
 	etay=getcol(filename,'etay');
 	etayp=getcol(filename,'etayp');
+    
+    % ElementName
+    elname=getcol(filename,'ElementName');
 	if nargout > 0
 		varargout={betax(ind),alphax(ind),etax(ind),etaxp(ind),betay(ind),alphay(ind),etay(ind),etayp(ind)};
-	else
+    else
+        disp(['Twiss after element: ' elname{ind}])
 		disp(['beta_x	= ' num2str(betax(ind))])
 		disp(['alpha_x	= ' num2str(alphax(ind))])
 		disp(['eta_x	= ' num2str(etax(ind))])
