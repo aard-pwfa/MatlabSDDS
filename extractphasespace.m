@@ -12,7 +12,6 @@ function varargout=extractphasespace(filename,varargin)
 		dt   = converttovector(sdds.column.dt);
 	end
 	p    = converttovector(sdds.column.p);
-	pID  = converttovector(sdds.column.particleID);
 
 	switch nargout
 		case 0
@@ -22,8 +21,10 @@ function varargout=extractphasespace(filename,varargin)
 		case 6
 			varargout = {x, xp, y, yp, t, p};
 		case 7
+            pID  = converttovector(sdds.column.particleID);
 			varargout = {x, xp, y, yp, t, p, pID};
 		case 8
+            pID  = converttovector(sdds.column.particleID);
 			varargout = {x, xp, y, yp, t, dt, p, pID};
 		case 1
 			c=299792458;
