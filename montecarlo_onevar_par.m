@@ -60,12 +60,12 @@ function montecarlo_onevar_par(filename,npages,gauss_params,element_name,param_n
 
 		% Change csv file to par file.
 		system(['gen_multi_par.py ' tempfr '.csv ' tempfr '.par']);
-		% delete([tempfr '.csv'],[tempfr '.par.tmp']);
+		delete([tempfr '.csv'],[tempfr '.par.tmp']);
 
 		filelist = [filelist ' ' tempfr '.par'];
 	end
 	% Fiducial + others
 	system(['sddscombine ' filelist ' ' filename '.par -overWrite']);
 	% system(['sddscombine' filelist ' FACET_WORK/quad_misalign.par -overWrite']);
-	% rmdir(filename,'s');
+	rmdir(filename,'s');
 end
