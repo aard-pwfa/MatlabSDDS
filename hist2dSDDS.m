@@ -1,7 +1,9 @@
 function h=hist2dSDDS(filename,xl,yl,res,varargin)
-%HIST2DSDDS Generates 2D histogram from SDDS data.
-% Supports split files.
-
+%HIST2DSDDS(filename,xl,yl,res,...) Generates 2D histogram from SDDS data.
+%	HIST2DSDDS(filename,xl,yl,res) plots a histogram of an SDDS particle file
+%		with coordinates xl on the x axis and yl on the y axis.
+%		(Options are particle coordinates x, y, xp, yp, dz, dp.)
+%		The number of bins is given by res.
 	if nargin==4
 		pagenum=1;
 	else
